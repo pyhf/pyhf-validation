@@ -39,9 +39,9 @@ jobs:
       if: matrix.python-version == 3.7 && matrix.os == 'ubuntu-latest'
       run: |
         check-manifest
-    # - name: Test with pytest
-    #   run: |
-    #     python -m pytest -r sx
+    - name: Test with pytest
+      run: |
+        python -m pytest -r sx
     - name: Report coverage with Codecov
       if: github.event_name == 'push' && matrix.python-version == 3.7 && matrix.os == 'ubuntu-latest'
       uses: codecov/codecov-action@master
