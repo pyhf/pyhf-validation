@@ -49,3 +49,17 @@ jobs:
     #     token: ${{ secrets.CODECOV_TOKEN }}
     #     file: ./coverage.xml
     #     flags: unittests
+
+  docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1.2.0
+    - name: Build Docker image
+      run: |
+        docker build . \
+          --file docker/Dockerfile \
+          --tag pyhf-validation:$GITHUB_SHA \
+          --compress
+        docker images
