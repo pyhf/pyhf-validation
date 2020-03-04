@@ -40,7 +40,7 @@ setup(
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     include_package_data=True,
-    install_requires=["pyhf[xmlio]>0.4.0","click>=6.0"],
+    install_requires=["pyhf[xmlio]>0.4.0", "click>=6.0"],
     python_requires=">=3.6",
     extras_require=extras_require,
     entry_points={"console_scripts": ["pyhf-validation=hfval.commandline:hfval"]},
