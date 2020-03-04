@@ -22,6 +22,7 @@ ignore = [
     '.*',
     'pyproject.toml',
     'pytest.ini',
+    'codecov.yml',
     'CODE_OF_CONDUCT.md',
     'CONTRIBUTING.md',
 ]
