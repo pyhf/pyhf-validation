@@ -8,7 +8,7 @@ Validation utilities for HistFactory workspaces
 
 To install `pyhf-validation` from GitHub (PyPI coming soon) run
 ```bash
-python -m pip install --ignore-installed --upgrade "git+https://github.com/pyhf/pyhf-validation.git#egg=pyhf-validation"
+python -m pip install --ignore-installed --upgrade "git+https://github.com/pyhf/pyhf-validation.git#egg=hfval"
 ```
 
 ## Authors

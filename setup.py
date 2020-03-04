@@ -21,7 +21,7 @@ extras_require = {
 extras_require["complete"] = sorted(set(sum(extras_require.values(), [])))
 
 setup(
-    name="pyhf-validation",
+    name="hfval",
     version="0.0.1",
     description="Validation utilities for HistFactory workspaces",
     long_description=long_description,
@@ -43,6 +43,7 @@ setup(
     install_requires=["pyhf[xmlio]>0.4.0","click>=6.0"],
     python_requires=">=3.6",
     extras_require=extras_require,
-    entry_points={"console_scripts": ["pyhf-validation=pyhf-validation.commandline:pyhf-validation"]},
+    entry_points={"console_scripts": ["pyhf-validation=hfval.commandline:hfval"]},
+    dependency_links=[],
     use_scm_version=lambda: {"local_scheme": lambda version: ""},
 )
