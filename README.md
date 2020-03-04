@@ -3,6 +3,7 @@
 Validation utilities for HistFactory workspaces
 
 [![GitHub Project](https://img.shields.io/badge/GitHub--blue?style=social&logo=GitHub)](https://github.com/pyhf/pyhf-validation)
+[![GitHub Actions Status: CI](https://github.com/pyhf/pyhf-validation/workflows/CI/CD/badge.svg)](https://github.com/pyhf/pyhf-validation/actions?query=workflow%3ACI%2FCD+branch%3Amaster)
 
 ## Installation
 
