@@ -1,4 +1,4 @@
-vimport ROOT
+import ROOT
 import pyhf
 import sys
 import click
