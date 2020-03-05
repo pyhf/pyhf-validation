@@ -1,5 +1,4 @@
 import ROOT
-import sys
 import json
 import pyhf
 import click
@@ -28,7 +27,6 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
 
     def exhaust_argset(s):
         it = s.fwdIterator()
-        pars = []
         while True:
             n = it.next()
             if not n:
@@ -112,7 +110,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
             % (pyhf_param, pyhf_val, root_val, abs_diff, perc_diff),
             file=f_comp,
         )
-    if f_comp == None:
+    if f_comp is None:
         print(
             "\n###########################################################################\n"
         )
