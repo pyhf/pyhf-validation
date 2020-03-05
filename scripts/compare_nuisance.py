@@ -1,6 +1,5 @@
 import ROOT
 import pyhf
-import sys
 import click
 import json
 
@@ -22,7 +21,6 @@ def compare_nuisance(root_workspace, pyhf_json):
 
     def exhaust_argset(s):
         it = s.fwdIterator()
-        pars = []
         while True:
             n = it.next()
             if not n:
