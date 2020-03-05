@@ -43,11 +43,11 @@ def compare_nuisance(root_workspace, pyhf_json):
     ]
 
     # Get pyhf nuisance params
-    w = pyhf.Workspace(json.load(open(pyhf_json)))
-    m = w.model()
+    ws = pyhf.Workspace(json.load(open(pyhf_json)))
+    model = ws.model()
 
     pars_pyhf = []
-    for k, v in m.config.par_map.items():
+    for k, v in model.config.par_map.items():
         sl = v["slice"]
         npars = sl.stop - sl.start
         if npars > 1:
