@@ -19,6 +19,7 @@ import click
     default="",
 )
 def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
+
     # Get the root fit results
     infile = ROOT.TFile.Open(root_workspace)
     workspace = infile.Get("combined")
@@ -37,28 +38,26 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
         x.GetName() for x in exhaust_argset(mc.GetParametersOfInterest())
     ]
 
-    p = workspace.pdf("simPdf")
-    d = workspace.data("obsData")
-    p.fitTo(d)
+    model = workspace.pdf('simPdf')
+    data = workspace.data('obsData')
+    model.fitTo(data)
 
     params_root = {}
-    for p in pars:
-        params_root[p] = workspace.var(p).getVal()
+    for par in pars:
+        params_root[par] = workspace.var(par).getVal()
 
     # Get the pyhf fit results
-    w = pyhf.Workspace(json.load(open(pyhf_json)))
-    m = w.model(
-        modifier_settings={
-            "normsys": {"interpcode": "code4"},
-            "histosys": {"interpcode": "code4p"},
-        },
+    ws = pyhf.Workspace(json.load(open(pyhf_json)))
+    model = ws.model(modifier_settings={
+        'normsys': {'interpcode': 'code4'},
+        'histosys': {'interpcode': 'code4p'},
+    },
     )
-    d = w.data(m)
-
-    bestfit = pyhf.infer.mle.fit(d, m)
+    data = ws.data(model)
+    bestfit = pyhf.infer.mle.fit(data, model)
 
     params_pyhf = {}
-    for k, v in m.config.par_map.items():
+    for k, v in model.config.par_map.items():
         sl = v["slice"]
         npars = sl.stop - sl.start
         value = bestfit[sl]
@@ -69,7 +68,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
             params_pyhf[k] = float(value[0])
 
     nuisance_dict = {"root": params_root, "pyhf": params_pyhf}
-
+    
     # Compare the fitted nuisance params, and print them out, either to the specified file or to the screen
     if outfile != "":
         f_comp = open(outfile, "w")
@@ -78,12 +77,16 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
         print(
             "\n\n########### Printing nuisance parameter comparisons to screen #############\n"
         )
-
+    param_str='param'
+    pyhf_val_str='pyhf val'
+    root_val_str='root val'
+    abs_diff_str='abs diff'
+    perc_diff_str='% diff'
     print(
-        "%42s%18s%18s%18s%18s\n"
-        % ("param", "pyhf val", "root val", "abs diff", "% diff"),
-        file=f_comp,
+        f'{param_str:<42}{pyhf_val_str:<18}{root_val_str:<18}{abs_diff_str:<18}{perc_diff_str:<18}\n',
+        file=f_comp
     )
+
     for param in nuisance_dict["root"]:
         # Replace some strings to match root nuisance param names to pyhf naming scheme
         pyhf_param = (
@@ -97,7 +100,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
         root_val = float(nuisance_dict["root"][param])
         try:
             pyhf_val = float(nuisance_dict["pyhf"][pyhf_param])
-        except:
+        except KeyError:
             print("Parameter %s missing from pyhf file" % pyhf_param)
             continue
         try:
@@ -106,8 +109,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
             perc_diff = 0
         abs_diff = pyhf_val - root_val
         print(
-            "%42s%18e%18e%18e%18f\n"
-            % (pyhf_param, pyhf_val, root_val, abs_diff, perc_diff),
+            f'{pyhf_param:<42}{pyhf_val:<18.6e}{root_val:<18.6e}{abs_diff:<18.6e}{perc_diff:<18.6f}\n',
             file=f_comp,
         )
     if f_comp is None:
