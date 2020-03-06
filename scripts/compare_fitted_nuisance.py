@@ -38,8 +38,8 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
         x.GetName() for x in exhaust_argset(mc.GetParametersOfInterest())
     ]
 
-    model = workspace.pdf('simPdf')
-    data = workspace.data('obsData')
+    model = workspace.pdf("simPdf")
+    data = workspace.data("obsData")
     model.fitTo(data)
 
     params_root = {}
@@ -48,10 +48,11 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
 
     # Get the pyhf fit results
     ws = pyhf.Workspace(json.load(open(pyhf_json)))
-    model = ws.model(modifier_settings={
-        'normsys': {'interpcode': 'code4'},
-        'histosys': {'interpcode': 'code4p'},
-    },
+    model = ws.model(
+        modifier_settings={
+            "normsys": {"interpcode": "code4"},
+            "histosys": {"interpcode": "code4p"},
+        },
     )
     data = ws.data(model)
     bestfit = pyhf.infer.mle.fit(data, model)
@@ -68,7 +69,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
             params_pyhf[k] = float(value[0])
 
     nuisance_dict = {"root": params_root, "pyhf": params_pyhf}
-    
+
     # Compare the fitted nuisance params, and print them out, either to the specified file or to the screen
     if outfile != "":
         f_comp = open(outfile, "w")
@@ -77,14 +78,14 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
         print(
             "\n\n########### Printing nuisance parameter comparisons to screen #############\n"
         )
-    param_str='param'
-    pyhf_val_str='pyhf val'
-    root_val_str='root val'
-    abs_diff_str='abs diff'
-    perc_diff_str='% diff'
+    param_str = "param"
+    pyhf_val_str = "pyhf val"
+    root_val_str = "root val"
+    abs_diff_str = "abs diff"
+    perc_diff_str = "% diff"
     print(
-        f'{param_str:<42}{pyhf_val_str:<18}{root_val_str:<18}{abs_diff_str:<18}{perc_diff_str:<18}\n',
-        file=f_comp
+        f"{param_str:<42}{pyhf_val_str:<18}{root_val_str:<18}{abs_diff_str:<18}{perc_diff_str:<18}\n",
+        file=f_comp,
     )
 
     for param in nuisance_dict["root"]:
@@ -109,7 +110,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
             perc_diff = 0
         abs_diff = pyhf_val - root_val
         print(
-            f'{pyhf_param:<42}{pyhf_val:<18.6e}{root_val:<18.6e}{abs_diff:<18.6e}{perc_diff:<18.6f}\n',
+            f"{pyhf_param:<42}{pyhf_val:<18.6e}{root_val:<18.6e}{abs_diff:<18.6e}{perc_diff:<18.6f}\n",
             file=f_comp,
         )
     if f_comp is None:
