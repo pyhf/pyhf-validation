@@ -14,7 +14,6 @@ To install `pyhf-validation` from GitHub (PyPI coming soon) run
 python -m pip install "git+https://github.com/pyhf/pyhf-validation.git#egg=hfval"
 ```
 
-
 ## Developing
 
 To develop, we suggest using [virtual environments](https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments) together with `pip`.
