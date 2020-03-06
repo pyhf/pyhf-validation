@@ -14,6 +14,22 @@ To install `pyhf-validation` from GitHub (PyPI coming soon) run
 python -m pip install --ignore-installed --upgrade "git+https://github.com/pyhf/pyhf-validation.git#egg=hfval"
 ```
 
+
+## Developing
+
+To develop, we suggest using [virtual environments](https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments) together with `pip`.
+Once the environment is activated, clone the repo from GitHub and install all necessary packages for development
+
+```
+python -m pip install --ignore-installed --upgrade -e .[complete]
+```
+
+Then setup the Git pre-commit hook for [Black](https://github.com/psf/black)  by running
+
+```
+pre-commit install
+```
+
 ## Authors
 
 Please check the [contribution statistics for a list of contributors](https://github.com/pyhf/pyhf-validation/graphs/contributors)
