@@ -109,7 +109,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
             perc_diff = 0
         abs_diff = pyhf_val - root_val
         print(
-            f'{pyhf_param:<42}{pyhf_val:<18.6e}{root_val:<18.6e}{abs_diff:<18.6e}{perc_diff:<18.6f}\n',
+            f'{pyhf_param:<42}{pyhf_val:<18.6e}{root_val:<18.6e}{abs_diff:<18.6e}{perc_diff:<18.6f}',
             file=f_comp,
         )
     if f_comp is None:
