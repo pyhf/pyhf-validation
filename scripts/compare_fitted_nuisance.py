@@ -68,7 +68,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
             params_pyhf[k] = float(value[0])
 
     nuisance_dict = {"root": params_root, "pyhf": params_pyhf}
-    
+
     # Compare the fitted nuisance params, and print them out, either to the specified file or to the screen
     if outfile != "":
         f_comp = open(outfile, "w")
@@ -77,6 +77,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
         print(
             "\n\n########### Printing nuisance parameter comparisons to screen #############\n"
         )
+
     param_str='param'
     pyhf_val_str='pyhf val'
     root_val_str='root val'
