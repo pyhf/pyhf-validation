@@ -5,6 +5,7 @@ Validation utilities for HistFactory workspaces
 [![GitHub Project](https://img.shields.io/badge/GitHub--blue?style=social&logo=GitHub)](https://github.com/pyhf/pyhf-validation)
 [![GitHub Actions Status: CI](https://github.com/pyhf/pyhf-validation/workflows/CI/CD/badge.svg)](https://github.com/pyhf/pyhf-validation/actions?query=workflow%3ACI%2FCD+branch%3Amaster)
 [![Code Coverage](https://codecov.io/gh/pyhf/pyhf-validation/graph/badge.svg?branch=master)](https://codecov.io/gh/pyhf/pyhf-validation?branch=master)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/pyhf/pyhf-validation.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/pyhf/pyhf-validation/latest/files/)
 [![CodeFactor](https://www.codefactor.io/repository/github/pyhf/pyhf-validation/badge)](https://www.codefactor.io/repository/github/pyhf/pyhf-validation)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
