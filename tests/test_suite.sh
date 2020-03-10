@@ -20,4 +20,3 @@ echo "############### Testing python script compare_fitted_nuisance.py with samp
 python "${scriptDir}"/../scripts/compare_fitted_nuisance.py \
   --root-workspace "${ROOT_WORKSPACE}" \
   --pyhf-json "${PYHF_JSON}"
-
