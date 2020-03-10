@@ -38,7 +38,6 @@ def compare_nuisance(root_workspace, pyhf_json):
         .replace("gamma_stat_", "staterror_")
         .replace("lumi", "Lumi")
         .replace("_bin", "")
-        .replace("_cuts_0", "_cuts")
         for sub in pars
     ]
 
@@ -50,7 +49,7 @@ def compare_nuisance(root_workspace, pyhf_json):
     for k, v in model.config.par_map.items():
         sl = v["slice"]
         npars = sl.stop - sl.start
-        if npars > 1:
+        if npars > 1 or "staterror" in k:
             for i in range(npars):
                 pars_pyhf.append("{}_{}".format(k, i))
         else:

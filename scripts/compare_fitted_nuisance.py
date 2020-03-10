@@ -62,7 +62,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
         sl = v["slice"]
         npars = sl.stop - sl.start
         value = bestfit[sl]
-        if npars > 1:
+        if npars > 1 or "staterror" in k:
             for i in range(npars):
                 params_pyhf["{}_{}".format(k, i)] = float(value[i])
         else:
@@ -96,7 +96,6 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
             .replace("gamma_stat_", "staterror_")
             .replace("lumi", "Lumi")
             .replace("_bin", "")
-            .replace("_cuts_0", "_cuts")
         )
 
         root_val = float(nuisance_dict["root"][param])
