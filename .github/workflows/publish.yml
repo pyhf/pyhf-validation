@@ -1,0 +1,24 @@
+name: Publish Docker Images
+
+on:
+  push:
+    branches:
+    - master
+    tags:
+    - v*
+
+jobs:
+  build-and-publish:
+    name: Build and publish Docker images to Docker Hub
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Build and Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@2.12
+      with:
+        name: pyhf/pyhf-validation
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        buildoptions: "--compress"
+        tags: "latest,root6.20.00,root6.20.00-python3.7"
