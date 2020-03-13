@@ -50,6 +50,27 @@ jobs:
         file: ./coverage.xml
         flags: unittests
 
+  test-ROOT-6_20-Py-3_7:
+
+    runs-on: ubuntu-latest
+    container: pyhf/pyhf-validation-root-base:root6.20.00-python3.7
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Install utilities
+      run: |
+        apt-get -qq -y update
+        apt-get -qq -y install git
+        git init .
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade --no-cache-dir pip setuptools wheel
+        python -m pip install -q --no-cache-dir -e .[complete]
+        python -m pip list
+    - name: Test with pytest
+      run: |
+        python -m pytest -r sx tests
+
   docker:
 
     runs-on: ubuntu-latest
