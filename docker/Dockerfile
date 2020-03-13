@@ -1,4 +1,4 @@
-FROM python:3.7-slim as base
+FROM pyhf/pyhf-validation-root-base:root6.20.00-python3.7 as base
 
 FROM base as builder
 COPY . /code
@@ -14,5 +14,5 @@ RUN cd /code && \
     python -m pip list
 
 FROM base
-COPY --from=builder /usr/local /usr/local
-ENTRYPOINT ["/usr/local/bin/pyhf-validation"]
+COPY --from=builder /opt/condaenv /opt/condaenv
+ENTRYPOINT ["/opt/condaenv/bin/pyhf-validation"]
