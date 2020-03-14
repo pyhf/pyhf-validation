@@ -58,6 +58,8 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Install utilities
+      # git init done as the .git directory seems
+      # to be missing after the checkout
       run: |
         apt-get -qq -y update
         apt-get -qq -y install git
