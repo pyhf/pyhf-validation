@@ -33,10 +33,10 @@ function JSON_to_workspace() {
     "${ANALYSIS_NAME}/workspaces/${JSON_WORKSPACE}"
 
   # Convert to ROOT + XML
-  if [[ ! -d "${ANALYSIS_NAME}/xml" ]]; then
-    mkdir "${ANALYSIS_NAME}/xml"
+  if [[ -d "${ANALYSIS_NAME}/xml" ]]; then
+    rm -rf "${ANALYSIS_NAME}/xml"
   fi
-  rm -rf  "${ANALYSIS_NAME}/xml"/*
+  mkdir "${ANALYSIS_NAME}/xml"
   pyhf json2xml \
     --output-dir "${ANALYSIS_NAME}/xml" \
     "${ANALYSIS_NAME}/workspaces/${JSON_WORKSPACE}"
