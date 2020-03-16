@@ -94,7 +94,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
         pyhf_param = (
             param.replace("alpha_", "")
             .replace("gamma_stat_", "staterror_")
-            .replace("lumi", "Lumi")
+            .replace("Lumi", "lumi")
             .replace("_bin", "")
         )
 

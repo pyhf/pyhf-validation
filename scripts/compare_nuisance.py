@@ -35,8 +35,7 @@ def compare_nuisance(root_workspace, pyhf_json):
     pars_root = [
         sub.replace("alpha_", "")
         .replace("gamma_stat_", "staterror_")
-        .replace("gamma_stat_", "staterror_")
-        .replace("lumi", "Lumi")
+        .replace("Lumi", "lumi")
         .replace("_bin", "")
         for sub in pars
     ]
