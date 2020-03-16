@@ -72,7 +72,7 @@ jobs:
     - name: Test with pytest
       run: |
         python -m pytest -r sx tests
-    - name: Test workspace comparison
+    - name: Generate ROOT workspace from JSON
       run: |
         bash scripts/JSON_to_workspace.sh \
           sbottom \
@@ -80,6 +80,8 @@ jobs:
           RegionA/BkgOnly.json \
           RegionA/patch.sbottom_1300_205_60.json \
           RegionA/sbottom_1300_205_60.json
+    - name: Test workspace comparison
+      run: |
         bash tests/test_suite.sh \
           sbottom/xml/config/FitConfig_combined_NormalMeasurement_model.root \
           sbottom/workspaces/RegionA/sbottom_1300_205_60.json
