@@ -58,17 +58,6 @@ function main() {
   local JSON_WORKSPACE=$5
 
   JSON_to_workspace "${ANALYSIS_NAME}" "${HEPDATA_URL}" "${BACKGROUND_ONLY}" "${SIGNAL_PATCH}" "${JSON_WORKSPACE}"
-
-  # bash tests/test_suite.sh \
-  #   "${ANALYSIS_NAME}/xml"/config/FitConfig_combined_NormalMeasurement_model.root \
-  #   "${ANALYSIS_NAME}/workspaces/${JSON_WORKSPACE}"
 }
 
 main "$@" || exit 1
-
-# main \
-#   sbottom \
-#   https://doi.org/10.17182/hepdata.89408.v1/r2 \
-#   RegionA/BkgOnly.json \
-#   RegionA/patch.sbottom_1300_205_60.json \
-#   RegionA/sbottom_1300_205_60.json
