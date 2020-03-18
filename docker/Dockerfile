@@ -14,5 +14,5 @@ RUN cd /code && \
     python -m pip list
 
 FROM base
-COPY --from=builder /opt/condaenv /opt/condaenv
-ENTRYPOINT ["/opt/condaenv/bin/pyhf-validation"]
+COPY --from=builder /usr/local /usr/local
+ENTRYPOINT ["/usr/local/bin/pyhf-validation"]
