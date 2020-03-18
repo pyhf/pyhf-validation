@@ -9,6 +9,9 @@ Validation utilities for HistFactory workspaces
 [![CodeFactor](https://www.codefactor.io/repository/github/pyhf/pyhf-validation/badge)](https://www.codefactor.io/repository/github/pyhf/pyhf-validation)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/pyhf/pyhf-validation)](https://hub.docker.com/r/pyhf/pyhf-validation)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/pyhf/pyhf-validation/latest)](https://hub.docker.com/r/pyhf/pyhf-validation/tags?name=latest)
+
 ## Installation
 
 To install `pyhf-validation` from GitHub (PyPI coming soon) run
