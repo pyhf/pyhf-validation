@@ -15,7 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Build and Publish to Registry
-      if: ${{ startsWith(github.ref, 'refs/tags/') }} == false
       uses: docker/build-push-action@v1
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -23,8 +22,8 @@ jobs:
         repository: pyhf/pyhf-validation
         dockerfile: docker/Dockerfile
         tags: latest,root6.20.00,root6.20.00-python3.7
+        tag_with_ref: ${{ startsWith(github.ref, 'refs/tags/') }}
     - name: Build and Publish to Registry with tag
-      if: ${{ startsWith(github.ref, 'refs/tags/') }} == true
       uses: docker/build-push-action@v1
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -32,4 +31,5 @@ jobs:
         repository: pyhf/pyhf-validation
         dockerfile: docker/Dockerfile
         tags: latest,latest-stable,root6.20.00,root6.20.00-python3.7
-        tag_with_ref: true
+        tag_with_ref: true 
+        push: ${{ startsWith(github.ref, 'refs/tags/') }}
