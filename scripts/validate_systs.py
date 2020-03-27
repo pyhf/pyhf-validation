@@ -107,7 +107,8 @@ def plot_rel_systs(p, channel_names, channel_bins):
         if len(sys_names_bin) > 0:
             x = np.arange(len(sys_names_bin))   # the label locations
             width = 0.5  # the width of the bars
-            fig = plt.figure(figsize =(12, 6)); ax=fig.add_subplot(1,1,1)
+            fig = plt.figure(figsize =(12, 6))
+            ax=fig.add_subplot(1,1,1)
             ax.set_ylabel('Relative Syst Size', fontsize=16)
             ax.set_title(f'{signal_name}: {channel_name} (Bin {bin_number}), Norm & Histo', fontsize=20)
             bar = ax.bar(x - width/2, rel_size, width)
