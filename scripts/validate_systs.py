@@ -227,7 +227,8 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
         y_min, y_max = min(rel_systs[:,1]), max(rel_systs[:,1])
         x,y = np.mgrid[x_min:x_max:100j, y_min:y_max:100j]
         for jbin in range(2,2+channel_bins[channel]):
-            f = plt.figure(figsize =(12, 6)); ax=f.add_subplot(1,1,1)
+            f = plt.figure(figsize =(12, 6))
+            ax=f.add_subplot(1,1,1)
             if x_label is not None:
                 ax.set_xlabel(x_label, fontsize=20)
             if y_label is not None:
