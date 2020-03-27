@@ -173,7 +173,8 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
         names_json.append(channel['name'])
 
     channels_json=[]
-    for ichan, channel in enumerate(spec_sig): channels_json.append(channel['path'])
+    for ichan, channel in enumerate(spec_sig):
+        channels_json.append(channel['path'])
 
     channel_names = dict(zip(channels_json, names_json))
 
