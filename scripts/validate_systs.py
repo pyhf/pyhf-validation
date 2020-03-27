@@ -227,7 +227,8 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
             f = plt.figure(figsize =(12, 6)); ax=f.add_subplot(1,1,1)
             if x_label is not None:
                 ax.set_xlabel(x_label, fontsize=20)
-            if y_label != None: ax.set_ylabel(y_label, fontsize=20)
+            if y_label is not None:
+                ax.set_ylabel(y_label, fontsize=20)
             ax.set_xlim(x_min-25, x_max+25)
             ax.set_ylim(y_min-25, y_max+25)
             bin_number = jbin - 1
