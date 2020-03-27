@@ -1,3 +1,4 @@
+#!/bin/bash
 # Script to test validate_systs.py with test input located in test_syst_validation_input. This script has been tested in the python:3.7 docker container with pyhf, parse, and matplotlib installed
 # Note: this script is assumed to be run from one level above the directory containing the script.
 

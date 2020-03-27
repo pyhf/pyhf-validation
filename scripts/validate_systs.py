@@ -107,7 +107,8 @@ def plot_rel_systs(p, channel_names, channel_bins):
         if len(sys_names_bin) > 0:
             x = np.arange(len(sys_names_bin))   # the label locations
             width = 0.5  # the width of the bars
-            fig = plt.figure(figsize =(12, 6)); ax=fig.add_subplot(1,1,1)
+            fig = plt.figure(figsize =(12, 6))
+            ax=fig.add_subplot(1,1,1)
             ax.set_ylabel('Relative Syst Size', fontsize=16)
             ax.set_title(f'{signal_name}: {channel_name} (Bin {bin_number}), Norm & Histo', fontsize=20)
             bar = ax.bar(x - width/2, rel_size, width)
@@ -169,10 +170,12 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
     spec_bkg = json.load(open("BkgOnly.json"))
 
     names_json=[]
-    for ichan, channel in enumerate(spec_bkg['channels']): names_json.append(channel['name'])
+    for ichan, channel in enumerate(spec_bkg['channels']):
+        names_json.append(channel['name'])
 
     channels_json=[]
-    for ichan, channel in enumerate(spec_sig): channels_json.append(channel['path'])
+    for ichan, channel in enumerate(spec_sig):
+        channels_json.append(channel['path'])
 
     channel_names = dict(zip(channels_json, names_json))
 
@@ -224,9 +227,12 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
         y_min, y_max = min(rel_systs[:,1]), max(rel_systs[:,1])
         x,y = np.mgrid[x_min:x_max:100j, y_min:y_max:100j]
         for jbin in range(2,2+channel_bins[channel]):
-            f = plt.figure(figsize =(12, 6)); ax=f.add_subplot(1,1,1)
-            if x_label != None: ax.set_xlabel(x_label, fontsize=20)
-            if y_label != None: ax.set_ylabel(y_label, fontsize=20)
+            f = plt.figure(figsize =(12, 6))
+            ax=f.add_subplot(1,1,1)
+            if x_label is not None:
+                ax.set_xlabel(x_label, fontsize=20)
+            if y_label is not None:
+                ax.set_ylabel(y_label, fontsize=20)
             ax.set_xlim(x_min-25, x_max+25)
             ax.set_ylim(y_min-25, y_max+25)
             bin_number = jbin - 1
@@ -242,7 +248,8 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
               im = ax.contourf(x,y,z, levels = np.linspace(vmin,vmax,100))
               cb = plt.colorbar(im, ax=ax)
               cb.set_label(label='$\oplus$ (histosys, normsys, staterr)', fontsize=18)
-              if channel_bins[channel] < 2: ax.set_title(channel_names[channel], fontsize=20)
+              if channel_bins[channel] < 2:
+                  ax.set_title(channel_names[channel], fontsize=20)
               else: ax.set_title(f'{channel_names[channel]} (Bin {bin_number})', fontsize=20)
               
               outliers_chan = np.asarray(
