@@ -169,7 +169,8 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
     spec_bkg = json.load(open("BkgOnly.json"))
 
     names_json=[]
-    for ichan, channel in enumerate(spec_bkg['channels']): names_json.append(channel['name'])
+    for ichan, channel in enumerate(spec_bkg['channels']):
+        names_json.append(channel['name'])
 
     channels_json=[]
     for ichan, channel in enumerate(spec_sig): channels_json.append(channel['path'])
