@@ -25,7 +25,7 @@ import glob
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.interpolate
-from parse import *
+import parse
 import click
 import pyhf
 plt.rc('xtick', labelsize=14)
@@ -197,9 +197,9 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                 if p['op'] == 'add':
                     plot_rel_systs(p, channel_names, channel_bins)
     
-    #print("Outliers (> 1.0):")
-    #for o in list(reversed(sorted(outliers, key = lambda x: x[-1]))):
-    #    print('\t',o[-1],o[-2],o[0],channel_names[o[1]],o[2])
+    print("Outliers (> 1.0):")
+    for o in list(reversed(sorted(outliers, key = lambda x: x[-1]))):
+        print('\t',o[-1],o[-2],o[0],channel_names[o[1]],o[2])
     """
     missing_signal = []
     # missing signal in signal region
@@ -217,7 +217,7 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
 
     for ichan, channel in enumerate(channels_json):
         rel_systs = np.asarray(
-            [[float(m) for m in [parse(sig_name_template, k).named[x_var], parse(sig_name_template, k).named[y_var]]] + v.get(channel, np.array([0.0]*channel_bins[channel])).tolist() for k,v in data.items()
+            [[float(m) for m in [parse.parse(sig_name_template, k).named[x_var], parse.parse(sig_name_template, k).named[y_var]]] + v.get(channel, np.array([0.0]*channel_bins[channel])).tolist() for k,v in data.items()
             ]
         )
         x_min, x_max = min(rel_systs[:,0]), max(rel_systs[:,0])
@@ -246,7 +246,7 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
               else: ax.set_title(f'{channel_names[channel]} (Bin {bin_number})', fontsize=20)
               
               outliers_chan = np.asarray(
-                  [[float(parse(sig_name_template, o[0]).named[x_var]), float(parse(sig_name_template, o[0]).named[y_var])] + [o[-2]] for o in outliers
+                  [[float(parse.parse(sig_name_template, o[0]).named[x_var]), float(parse.parse(sig_name_template, o[0]).named[y_var])] + [o[-2]] for o in outliers
                    if o[1] == channel and o[2] == jbin-2]
               )
               
