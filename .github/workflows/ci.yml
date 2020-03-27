@@ -62,8 +62,12 @@ jobs:
       # to be missing after the checkout
       run: |
         apt-get -qq -y update
-        apt-get -qq -y install git
+        apt-get -qq -y install git shellcheck
         git init .
+    - name: Lint with Shellcheck
+      run: |
+        shellcheck tests/*.sh
+        shellcheck scripts/*.sh
     - name: Install dependencies
       run: |
         python -m pip install --upgrade --no-cache-dir pip setuptools wheel
