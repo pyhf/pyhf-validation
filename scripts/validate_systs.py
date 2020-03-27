@@ -244,7 +244,8 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
               im = ax.contourf(x,y,z, levels = np.linspace(vmin,vmax,100))
               cb = plt.colorbar(im, ax=ax)
               cb.set_label(label='$\oplus$ (histosys, normsys, staterr)', fontsize=18)
-              if channel_bins[channel] < 2: ax.set_title(channel_names[channel], fontsize=20)
+              if channel_bins[channel] < 2:
+                  ax.set_title(channel_names[channel], fontsize=20)
               else: ax.set_title(f'{channel_names[channel]} (Bin {bin_number})', fontsize=20)
               
               outliers_chan = np.asarray(
