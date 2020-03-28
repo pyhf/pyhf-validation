@@ -62,7 +62,7 @@ jobs:
       # to be missing after the checkout
       run: |
         apt-get -qq -y update
-        apt-get -qq -y install git shellcheck
+        apt-get -qq -y install shellcheck
         git init .
     - name: Lint with Shellcheck
       run: |
