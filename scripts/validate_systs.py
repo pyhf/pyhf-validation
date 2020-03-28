@@ -81,7 +81,7 @@ def process_patch(p):
     )
     delta_up = delta / 2.0
     delta_dn = delta / 2.0
-    stat_deltas = handle_deltas(delta_up, delta_dn)
+    #stat_deltas = handle_deltas(delta_up, delta_dn)
     stat_deltas = np.zeros_like(
         histo_deltas
     )  # Don't consider the stat error for this calculation
@@ -165,7 +165,7 @@ def plot_rel_systs(p, channel_names, channel_bins):
                 f"{signal_name}: {channel_name} (Bin {bin_number}), Norm & Histo",
                 fontsize=20,
             )
-            bar = ax.bar(x - width / 2, rel_size, width)
+            ax.bar(x - width / 2, rel_size, width)
             ax.set_xticks(x)
             ax.set_xticklabels(sys_names_bin, rotation=45, ha="right")
             plt.tight_layout()
@@ -213,11 +213,11 @@ def plot_rel_systs(p, channel_names, channel_bins):
 def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
 
     patches = [json.load(open(x)) for x in glob.glob("patch*.json")]
-    grouped_patches = {
-        x[0]["value"]["name"]: {p["path"]: p for p in x if p["op"] == "add"}
-        for x in patches
-        if "value" in x[0]
-    }
+    #grouped_patches = {
+    #    x[0]["value"]["name"]: {p["path"]: p for p in x if p["op"] == "add"}
+    #    for x in patches
+    #    if "value" in x[0]
+    #}
 
     data = {
         x[0]["value"]["name"]: {
