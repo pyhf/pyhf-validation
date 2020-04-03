@@ -76,12 +76,15 @@ def process_patch(p):
     delta_dn = np.asarray([l * nom - nom for l in lo])
     norm_deltas = handle_deltas(delta_up, delta_dn)
 
+    """
     delta = np.asarray(
         [m["data"] for m in p["value"]["modifiers"] if m["type"] == "staterror"]
     )
     delta_up = delta / 2.0
     delta_dn = delta / 2.0
-    #stat_deltas = handle_deltas(delta_up, delta_dn)
+    stat_deltas = handle_deltas(delta_up, delta_dn)
+    """
+
     stat_deltas = np.zeros_like(
         histo_deltas
     )  # Don't consider the stat error for this calculation
@@ -213,11 +216,11 @@ def plot_rel_systs(p, channel_names, channel_bins):
 def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
 
     patches = [json.load(open(x)) for x in glob.glob("patch*.json")]
-    #grouped_patches = {
+    # grouped_patches = {
     #    x[0]["value"]["name"]: {p["path"]: p for p in x if p["op"] == "add"}
     #    for x in patches
     #    if "value" in x[0]
-    #}
+    # }
 
     data = {
         x[0]["value"]["name"]: {

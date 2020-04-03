@@ -17,9 +17,7 @@ extras_require = {
         "black",
         "twine",
     ],
-    "test": [
-        "matplotlib",
-    ],
+    "test": ["matplotlib",],
 }
 extras_require["complete"] = sorted(set(sum(extras_require.values(), [])))
 
