@@ -217,7 +217,6 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
         if "value" in x[0]
     }
 
-    # print(data)
 
     # Make the mapping of json channel names to analysis region names
     listOfPatches = glob.glob("patch*.json")
