@@ -208,11 +208,6 @@ def plot_rel_systs(p, channel_names, channel_bins):
 def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
 
     patches = [json.load(open(x)) for x in glob.glob("patch*.json")]
-    # grouped_patches = {
-    #    x[0]["value"]["name"]: {p["path"]: p for p in x if p["op"] == "add"}
-    #    for x in patches
-    #    if "value" in x[0]
-    # }
 
     data = {
         x[0]["value"]["name"]: {
