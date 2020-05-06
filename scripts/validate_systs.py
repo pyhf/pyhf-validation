@@ -312,7 +312,6 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                 z = scipy.interpolate.griddata(
                     rel_systs[:, :2], rel_systs[:, jbin], (x, y)
                 )
-                # print(rel_systs)
 
                 vmin, vmax = 0, v_max
                 # z = np.log(z)
