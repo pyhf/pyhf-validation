@@ -314,7 +314,6 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                 )
 
                 vmin, vmax = 0, v_max
-                # z = np.log(z)
                 ax.scatter(
                     rel_systs[:, 0],
                     rel_systs[:, 1],
