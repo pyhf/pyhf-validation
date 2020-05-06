@@ -16,9 +16,9 @@ exclude = '''
 
 [tool.check-manifest]
 ignore = [
-    'tests*',
-    'docker*',
-    'binder*',
+    'tests/**',
+    'docker/**',
+    'binder/**',
     '.*',
     'pyproject.toml',
     'pytest.ini',
