@@ -76,14 +76,6 @@ def process_patch(p):
     delta_dn = np.asarray([l * nom - nom for l in lo])
     norm_deltas = handle_deltas(delta_up, delta_dn)
 
-    """
-    delta = np.asarray(
-        [m["data"] for m in p["value"]["modifiers"] if m["type"] == "staterror"]
-    )
-    delta_up = delta / 2.0
-    delta_dn = delta / 2.0
-    stat_deltas = handle_deltas(delta_up, delta_dn)
-    """
 
     stat_deltas = np.zeros_like(
         histo_deltas
