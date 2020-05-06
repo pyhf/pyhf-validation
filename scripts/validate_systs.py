@@ -344,7 +344,6 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                     ]
                 )
 
-                # print(outliers_chan)
 
                 if outliers_chan.shape[0]:
                     ax.scatter(
