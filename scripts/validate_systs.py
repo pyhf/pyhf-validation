@@ -76,7 +76,6 @@ def process_patch(p):
     delta_dn = np.asarray([l * nom - nom for l in lo])
     norm_deltas = handle_deltas(delta_up, delta_dn)
 
-
     stat_deltas = np.zeros_like(
         histo_deltas
     )  # Don't consider the stat error for this calculation
@@ -217,7 +216,6 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
         if "value" in x[0]
     }
 
-
     # Make the mapping of json channel names to analysis region names
     listOfPatches = glob.glob("patch*.json")
     spec_sig = json.load(open(listOfPatches[0]))
@@ -342,7 +340,6 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                         if o[1] == channel and o[2] == jbin - 2
                     ]
                 )
-
 
                 if outliers_chan.shape[0]:
                     ax.scatter(
