@@ -64,7 +64,7 @@ def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
         value = bestfit[sl]
         if npars > 1 or "staterror" in k:
             for i in range(npars):
-                params_pyhf["{}_{}".format(k, i)] = float(value[i])
+                params_pyhf[f"{k}_{i}"] = float(value[i])
         else:
             params_pyhf[k] = float(value[0])
 

@@ -51,7 +51,7 @@ def compare_nuisance(root_workspace, pyhf_json):
         npars = sl.stop - sl.start
         if npars > 1 or "staterror" in k:
             for i in range(npars):
-                pars_pyhf.append("{}_{}".format(k, i))
+                pars_pyhf.append(f"{k}_{i}")
         else:
             pars_pyhf.append(k)
 
