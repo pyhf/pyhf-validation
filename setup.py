@@ -12,7 +12,7 @@ extras_require = {
         "pytest-cov~=2.8",
         "pytest-console-scripts~=0.2",
         "bumpversion~=0.5",
-        "pyflakes",
+        "flake8",
         "pre-commit",
         "black",
         "twine",
