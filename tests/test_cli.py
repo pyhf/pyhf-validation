@@ -5,7 +5,7 @@ import time
 
 def test_version(script_runner):
     command = "pyhf-validation --version"
-    # Run once to ensure first time setup doesn't slow down 
+    # Run once to ensure first time setup doesn't slow down
     script_runner.run(*shlex.split(command))
     start = time.time()
     ret = script_runner.run(*shlex.split(command))
