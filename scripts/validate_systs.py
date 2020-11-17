@@ -1,22 +1,22 @@
 """
   Date:     200325
-  History:  
+  History:
     - Originally written as a python notebook by Lukas Heinrich
     - Adapted for the 3L-RJ likelihood validation by Giordon Stark (https://github.com/kratsg/3L-RJ-mimic-likelihood-validation/blob/master/OutlierPlot.ipynb)
     - Adapted and generalized to script by Danika MacDonell [March 25, 2020]
-    
+
   Details:  Script to visualize the relative size of the systematics for pyhf likelihoods at each mass point, where the systematics are added together in quadrature. Should be run in a directory containing the background-only json likelihood file, along with a patch json likelihood file for each signal point. Assumes that all the json patch file are located at the same directory level as this script.
-  
+
   Usage:
   >> python OutlierPlot.py --signal_template <signal_template_{a}_{b}_{c}_for_masses> --x_var <which variable in signal name template to plot on x axis (defaults to 'a')> --y_var <which variable in signal name template to plot on x axis (defaults to 'b')> --v_max <max colourbar amplitude> --x_label <x axis label> --y_label <y axis label>
-  
+
   Example for 1Lbb Wh analysis (https://glance.cern.ch/atlas/analysis/analyses/details.php?id=2969):
-  
-  >> python OutlierPlot.py --signal_template C1N2_Wh_hbb_{a}_{b} --x_var a --y_var b --v_max 10 --x_label '$m(\tilde{\chi}_{1}^{\pm}/\tilde{\chi}_{2}^{0})$ [GeV]' --y_label '$m(\tilde{\chi}_{1}^{0})$ [GeV]'
-  
+
+  >> python OutlierPlot.py --signal_template C1N2_Wh_hbb_{a}_{b} --x_var a --y_var b --v_max 10 --x_label '$m(\tilde{\\chi}_{1}^{\\pm}/\tilde{\\chi}_{2}^{0})$ [GeV]' --y_label '$m(\tilde{\\chi}_{1}^{0})$ [GeV]'
+
   The signal template is the name of an arbitrary signal in the json patch files, with the signal masses left as {}. Given a background-only file and a patch file, the signal name can be found under "samples" in the output of:
   >> jsonpatch BkgOnly.json patch_XXX.json | pyhf inspect
-  
+
   If, for example, one of the signals is called C1N2_Wh_hbb_550_200, where 550 and 200 are the variable model masses, the signal template would be C1N2_Wh_hbb_{}_{}.
   """
 
@@ -72,8 +72,8 @@ def process_patch(p):
     lo = np.asarray(
         [m["data"]["lo"] for m in p["value"]["modifiers"] if m["type"] == "normsys"]
     )
-    delta_up = np.asarray([h * nom - nom for h in hi])
-    delta_dn = np.asarray([l * nom - nom for l in lo])
+    delta_up = np.asarray([delta * nom - nom for delta in hi])
+    delta_dn = np.asarray([delta * nom - nom for delta in lo])
     norm_deltas = handle_deltas(delta_up, delta_dn)
 
     stat_deltas = np.zeros_like(
@@ -131,8 +131,8 @@ def plot_rel_systs(p, channel_names, channel_bins):
     lo = np.asarray(
         [m["data"]["lo"] for m in p["value"]["modifiers"] if m["type"] == "normsys"]
     )
-    delta_up = np.asarray([h * nom - nom for h in hi])
-    delta_dn = np.asarray([l * nom - nom for l in lo])
+    delta_up = np.asarray([delta * nom - nom for delta in hi])
+    delta_dn = np.asarray([delta * nom - nom for delta in lo])
     norm_deltas = handle_deltas(delta_up, delta_dn)
     norm_rel_size = np.absolute(norm_deltas) / (1.0 * nom)
 
@@ -321,7 +321,9 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                 )
                 im = ax.contourf(x, y, z, levels=np.linspace(vmin, vmax, 100))
                 cb = plt.colorbar(im, ax=ax)
-                cb.set_label(label="$\oplus$ (histosys, normsys, staterr)", fontsize=18)
+                cb.set_label(
+                    label=r"$\oplus$ (histosys, normsys, staterr)", fontsize=18
+                )
                 if channel_bins[channel] < 2:
                     ax.set_title(channel_names[channel], fontsize=20)
                 else:
