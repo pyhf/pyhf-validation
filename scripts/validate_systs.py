@@ -169,7 +169,7 @@ def plot_rel_systs(p, channel_names, channel_bins):
             plt.close()
 
 
-@click.command()  # noqa: C901
+@click.command()
 @click.option(
     "--signal_template",
     help="Signal name template, with signal masses as variables. Signal masses must be denoted by {a}, {b}, {c}, ... (eg. signal_{a}_{b}_more_info)",
