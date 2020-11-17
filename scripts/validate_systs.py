@@ -12,7 +12,7 @@
   
   Example for 1Lbb Wh analysis (https://glance.cern.ch/atlas/analysis/analyses/details.php?id=2969):
   
-  >> python OutlierPlot.py --signal_template C1N2_Wh_hbb_{a}_{b} --x_var a --y_var b --v_max 10 --x_label '$m(\tilde{\chi}_{1}^{\pm}/\tilde{\chi}_{2}^{0})$ [GeV]' --y_label '$m(\tilde{\chi}_{1}^{0})$ [GeV]'
+  >> python OutlierPlot.py --signal_template C1N2_Wh_hbb_{a}_{b} --x_var a --y_var b --v_max 10 --x_label '$m(\tilde{\\chi}_{1}^{\\pm}/\tilde{\\chi}_{2}^{0})$ [GeV]' --y_label '$m(\tilde{\\chi}_{1}^{0})$ [GeV]'
   
   The signal template is the name of an arbitrary signal in the json patch files, with the signal masses left as {}. Given a background-only file and a patch file, the signal name can be found under "samples" in the output of:
   >> jsonpatch BkgOnly.json patch_XXX.json | pyhf inspect
@@ -321,7 +321,9 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                 )
                 im = ax.contourf(x, y, z, levels=np.linspace(vmin, vmax, 100))
                 cb = plt.colorbar(im, ax=ax)
-                cb.set_label(label="$\oplus$ (histosys, normsys, staterr)", fontsize=18)
+                cb.set_label(
+                    label=r"$\oplus$ (histosys, normsys, staterr)", fontsize=18
+                )
                 if channel_bins[channel] < 2:
                     ax.set_title(channel_names[channel], fontsize=20)
                 else:
