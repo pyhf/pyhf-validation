@@ -50,7 +50,7 @@ jobs:
         file: ./coverage.xml
         flags: unittests
 
-  test-ROOT-6_20-Py-3_7:
+  test-ROOT-6_22-Py-3_8:
 
     runs-on: ubuntu-latest
     container: pyhf/pyhf-validation-root-base:root6.22.02-python3.8
