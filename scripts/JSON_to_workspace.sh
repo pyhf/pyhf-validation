@@ -3,61 +3,57 @@
 set -e
 
 function JSON_to_workspace() {
-  # 1: the analysis name
+  # 1: the analysis pallet name
   # 2: the url of the JSON workspaces
   # 3: the background only workspace
-  # 4: the signal workspace patch
+  # 4: the name of the signal patch
   # 5: the patched background + signal workspace
-  local ANALYSIS_NAME=$1
+  local PALLET_NAME=$1
   local HEPDATA_URL=$2
   local BACKGROUND_ONLY=$3
-  local SIGNAL_PATCH=$4
+  local PATCH_NAME=$4
   local JSON_WORKSPACE=$5
 
-  if [[ ! -d "${ANALYSIS_NAME}" ]]; then
-    mkdir "${ANALYSIS_NAME}"
-  fi
-
   # Download from HEPData
-  curl -sL -o "${ANALYSIS_NAME}/workspaces.tar.gz" "${HEPDATA_URL}"
-  # Unpack tarball
-  if [[ ! -d "${ANALYSIS_NAME}/workspaces" ]]; then
-    mkdir "${ANALYSIS_NAME}/workspaces"
-  fi
-  tar xvzf "${ANALYSIS_NAME}/workspaces.tar.gz" -C "${ANALYSIS_NAME}/workspaces"
+  pyhf contrib download "${HEPDATA_URL}" "${PALLET_NAME}"
 
   # Create a full signal+background workspace
+  workspace_dir="${BACKGROUND_ONLY%/*}"
+  pyhf patchset extract \
+    --name "${PATCH_NAME}" \
+    --output-file "${PALLET_NAME}/${workspace_dir}/${PATCH_NAME}.json" \
+    "${PALLET_NAME}/${workspace_dir}/patchset.json"
   jsonpatch \
-    "${ANALYSIS_NAME}/workspaces/${BACKGROUND_ONLY}" \
-    "${ANALYSIS_NAME}/workspaces/${SIGNAL_PATCH}" > \
-    "${ANALYSIS_NAME}/workspaces/${JSON_WORKSPACE}"
+    "${PALLET_NAME}/${BACKGROUND_ONLY}" \
+    "${PALLET_NAME}/${workspace_dir}/${PATCH_NAME}.json" > \
+    "${PALLET_NAME}/${JSON_WORKSPACE}"
 
   # Convert to ROOT + XML
-  if [[ -d "${ANALYSIS_NAME}/xml" ]]; then
-    rm -rf "${ANALYSIS_NAME}/xml"
+  if [[ -d "${PALLET_NAME}/xml" ]]; then
+    rm -rf "${PALLET_NAME}/xml"
   fi
-  mkdir "${ANALYSIS_NAME}/xml"
+  mkdir "${PALLET_NAME}/xml"
   pyhf json2xml \
-    --output-dir "${ANALYSIS_NAME}/xml" \
-    "${ANALYSIS_NAME}/workspaces/${JSON_WORKSPACE}"
+    --output-dir "${PALLET_NAME}/xml" \
+    "${PALLET_NAME}/${JSON_WORKSPACE}"
 
   # Generate ROOT workspace
-  hist2workspace "${ANALYSIS_NAME}/xml"/FitConfig.xml
+  hist2workspace "${PALLET_NAME}/xml/FitConfig.xml"
 }
 
 function main() {
-  # 1: the analysis name
+  # 1: the analysis pallet name
   # 2: the url of the JSON workspaces
   # 3: the background only workspace
-  # 4: the signal workspace patch
+  # 4: the name of the signal patch
   # 5: the patched background + signal workspace
-  local ANALYSIS_NAME=$1
+  local PALLET_NAME=$1
   local HEPDATA_URL=$2
   local BACKGROUND_ONLY=$3
-  local SIGNAL_PATCH=$4
+  local PATCH_NAME=$4
   local JSON_WORKSPACE=$5
 
-  JSON_to_workspace "${ANALYSIS_NAME}" "${HEPDATA_URL}" "${BACKGROUND_ONLY}" "${SIGNAL_PATCH}" "${JSON_WORKSPACE}"
+  JSON_to_workspace "${PALLET_NAME}" "${HEPDATA_URL}" "${BACKGROUND_ONLY}" "${PATCH_NAME}" "${JSON_WORKSPACE}"
 }
 
 main "$@" || exit 1

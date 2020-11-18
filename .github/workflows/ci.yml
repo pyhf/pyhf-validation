@@ -79,11 +79,11 @@ jobs:
     - name: Generate ROOT workspace from JSON
       run: |
         bash scripts/JSON_to_workspace.sh \
-          sbottom \
-          https://doi.org/10.17182/hepdata.89408.v1/r2 \
+          sbottom-pallet \
+          https://www.hepdata.net/record/resource/1408070?view=true \
           RegionA/BkgOnly.json \
-          RegionA/patch.sbottom_1300_205_60.json \
-          RegionA/sbottom_1300_205_60.json
+          sbottom_1300_205_60 \
+          RegionA/workspace_sbottom_1300_205_60.json
     - name: Test workspace comparison
       run: |
         bash tests/test_suite.sh \
