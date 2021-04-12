@@ -353,7 +353,7 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                         cmap="cool",
                     )
                 for o in outliers_chan:
-                    ax.text(o[0] + 5, o[1] + 5, "{:.2f}".format(o[2]), c="r")
+                    ax.text(o[0] + 5, o[1] + 5, f"{o[2]:.2f}", c="r")
 
                 plt.tight_layout()
                 plt.savefig(f"Plots/{channel_names[channel]}_bin{bin_number}.png")
