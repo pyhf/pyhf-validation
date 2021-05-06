@@ -50,6 +50,46 @@ jobs:
         file: ./coverage.xml
         flags: unittests
 
+  test-ROOT-6_22-Py-3_8:
+
+    runs-on: ubuntu-latest
+    container: pyhf/pyhf-validation-root-base:root6.22.02-python3.8
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Install utilities
+      # git init done as the .git directory seems
+      # to be missing after the checkout
+      run: |
+        apt-get -qq -y update
+        apt-get -qq -y install shellcheck
+        git init .
+    - name: Lint with Shellcheck
+      run: |
+        shellcheck tests/*.sh
+        shellcheck scripts/*.sh
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade --no-cache-dir pip setuptools wheel
+        python -m pip install --quiet --no-cache-dir --editable .[complete]
+        python -m pip list
+    - name: Test with pytest
+      run: |
+        python -m pytest -r sx tests
+    - name: Generate ROOT workspace from JSON
+      run: |
+        bash scripts/JSON_to_workspace.sh \
+          sbottom-pallet \
+          https://www.hepdata.net/record/resource/1408070?view=true \
+          RegionA/BkgOnly.json \
+          sbottom_1300_205_60 \
+          RegionA/workspace_sbottom_1300_205_60.json
+    - name: Test workspace comparison
+      run: |
+        bash tests/test_suite.sh \
+          sbottom-pallet/xml/config/FitConfig_combined_NormalMeasurement_model.root \
+          sbottom-pallet/RegionA/workspace_sbottom_1300_205_60.json
+
   docker:
 
     runs-on: ubuntu-latest
