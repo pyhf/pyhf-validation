@@ -1,4 +1,4 @@
-FROM pyhf/pyhf-validation-root-base:root6.20.00-python3.7 as base
+FROM pyhf/pyhf-validation-root-base:root6.22.02-python3.8 as base
 
 FROM base as builder
 COPY . /code
