@@ -1,4 +1,4 @@
-FROM pyhf/pyhf-validation-root-base:root6.20.00-python3.7 as base
+FROM atlasamglab/stats-base:root6.24.02 as base
 
 FROM base as builder
 COPY . /code
