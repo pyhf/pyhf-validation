@@ -1,18 +1,18 @@
-FROM pyhf/pyhf-validation-root-base:root6.20.00-python3.7 as base
+FROM atlasamglab/stats-base:root6.24.02 as base
 
 FROM base as builder
 COPY . /code
 RUN cd /code && \
-    apt-get -qq -y update && \
-    apt-get -qq -y install \
-      git && \
-    apt-get -y autoclean && \
-    apt-get -y autoremove && \
-    rm -rf /var/lib/apt-get/lists/* && \
     python -m pip install --upgrade --no-cache-dir pip setuptools wheel && \
     python -m pip install --no-cache-dir . && \
     python -m pip list
 
 FROM base
-COPY --from=builder /usr/local /usr/local
-ENTRYPOINT ["/usr/local/bin/pyhf-validation"]
+COPY --from=builder /usr/local/venv /usr/local/venv
+RUN apt-get -qq -y update && \
+    apt-get -qq -y install \
+      curl && \
+    apt-get -y autoclean && \
+    apt-get -y autoremove && \
+    rm -rf /var/lib/apt/lists/*
+ENTRYPOINT ["/usr/local/venv/bin/pyhf-validation"]
