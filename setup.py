@@ -8,7 +8,7 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as readme_md
 extras_require = {
     "develop": [
         "check-manifest",
-        "pytest~=5.2",
+        "pytest~=6.0",
         "pytest-cov~=2.8",
         "pytest-console-scripts~=0.2",
         "bumpversion~=0.5",
@@ -36,6 +36,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     package_dir={"": "src"},
     packages=find_packages(where="src"),
