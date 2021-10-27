@@ -13,8 +13,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
         python-version: ['3.7', '3.8', '3.9']
+      include:
+        os: macos-latest
+        python-version: '3.7'
+        os: macos-latest
+        python-version: '3.9'
 
     steps:
     - uses: actions/checkout@master
@@ -34,6 +39,7 @@ jobs:
       if: matrix.python-version == '3.9' && matrix.os == 'ubuntu-latest'
       run: |
         flake8 .
+
     - name: Lint with Black
       if: matrix.python-version == '3.9' && matrix.os == 'ubuntu-latest'
       run: |
