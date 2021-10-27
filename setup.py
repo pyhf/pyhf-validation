@@ -8,7 +8,7 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as readme_md
 extras_require = {
     "develop": [
         "check-manifest",
-        "pytest~=5.2",
+        "pytest~=6.0",
         "pytest-cov~=2.8",
         "pytest-console-scripts~=0.2",
         "bumpversion~=0.5",
@@ -34,15 +34,15 @@ setup(
     keywords="pyhf validation",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     include_package_data=True,
-    install_requires=["pyhf[xmlio]>0.4.0", "click>=6.0"],
-    python_requires=">=3.6",
+    install_requires=["pyhf[xmlio]>0.6.0"],
+    python_requires=">=3.7",
     extras_require=extras_require,
     entry_points={"console_scripts": ["pyhf-validation=hfval.commandline:hfval"]},
     dependency_links=[],
