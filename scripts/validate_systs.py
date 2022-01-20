@@ -39,7 +39,7 @@ def handle_deltas(delta_up, delta_dn):
         np.bitwise_and(delta_up <= 0, delta_dn <= 0),
     )
     span = delta_dn + delta_up
-    maxdel = np.maximum(np.abs(delta_dn), np.abs(delta_dn))
+    maxdel = np.maximum(np.abs(delta_up), np.abs(delta_dn))
     abs_unc = np.where(nom_is_center, span, maxdel)
     return abs_unc
 
