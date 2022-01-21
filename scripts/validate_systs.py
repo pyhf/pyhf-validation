@@ -82,8 +82,9 @@ def process_patch(p):
 
     systs = np.concatenate([histo_deltas, norm_deltas, stat_deltas])
     inquad = np.sqrt(np.sum(np.square(systs), axis=0))
-    rel = inquad / nom
-    rel = np.where(nom == 0, np.ones_like(nom), rel)
+
+    div0 = nom == 0
+    rel = np.where(div0, 0, inquad) / np.where(div0, 1, nom)
     return rel, nom
 
 
