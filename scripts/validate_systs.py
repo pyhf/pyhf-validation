@@ -142,7 +142,11 @@ def plot_rel_systs(p, channel_names, channel_bins):
 
     for iBin in range(n_bins):
         bin_number = iBin + 1
-        rel_size = np.concatenate((histo_rel_size[:, iBin], norm_rel_size[:, iBin])) if norm_deltas.size else histo_rel_size[:, iBin]
+        rel_size = (
+            np.concatenate((histo_rel_size[:, iBin], norm_rel_size[:, iBin]))
+            if norm_deltas.size
+            else histo_rel_size[:, iBin]
+        )
         sys_names_bin = [
             sys_names[idx]
             for idx, size in enumerate(rel_size)
@@ -230,7 +234,7 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
     for patch in patchset:
         for op in patch.patch:
             path = op["path"]
-            channel_index = int(path.split('/')[2])
+            channel_index = int(path.split("/")[2])
             channel_names[path] = names_json[channel_index]
 
     # Make the mapping of number of json channel name to number of bins
@@ -364,4 +368,3 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
 
 if __name__ == "__main__":
     outlier_plot()
-
