@@ -311,7 +311,8 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                 rel_systs[:, jbin] != 0
             ]  # Remove any points with zero relative syst
 
-            if len(rel_systs) > 0:
+            # qhull interpolation needs at least 4 points minimum
+            if len(rel_systs) >= 4:
                 z = scipy.interpolate.griddata(
                     rel_systs[:, :2], rel_systs[:, jbin], (x, y)
                 )
