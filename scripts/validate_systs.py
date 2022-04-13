@@ -4,6 +4,7 @@
     - Originally written as a python notebook by Lukas Heinrich
     - Adapted for the 3L-RJ likelihood validation by Giordon Stark (https://github.com/kratsg/3L-RJ-mimic-likelihood-validation/blob/master/OutlierPlot.ipynb)
     - Adapted and generalized to script by Danika MacDonell [March 25, 2020]
+    - Adapted and fixed up more to run on patchsets [April 13, 2022]
 
   Details:  Script to visualize the relative size of the systematics for pyhf likelihoods at each mass point, where the systematics are added together in quadrature. Should be run in a directory containing the background-only json likelihood file, along with a patch json likelihood file for each signal point. Assumes that all the json patch file are located at the same directory level as this script.
 
@@ -75,6 +76,7 @@ def process_patch(p):
     delta_up = np.asarray([delta * nom - nom for delta in hi])
     delta_dn = np.asarray([delta * nom - nom for delta in lo])
     norm_deltas = handle_deltas(delta_up, delta_dn)
+    norm_deltas = norm_deltas if norm_deltas.size else np.ones_like(histo_deltas)
 
     stat_deltas = np.zeros_like(
         histo_deltas
@@ -140,7 +142,7 @@ def plot_rel_systs(p, channel_names, channel_bins):
 
     for iBin in range(n_bins):
         bin_number = iBin + 1
-        rel_size = np.concatenate((histo_rel_size[:, iBin], norm_rel_size[:, iBin]))
+        rel_size = np.concatenate((histo_rel_size[:, iBin], norm_rel_size[:, iBin])) if norm_deltas.size else histo_rel_size[:, iBin]
         sys_names_bin = [
             sys_names[idx]
             for idx, size in enumerate(rel_size)
@@ -164,7 +166,7 @@ def plot_rel_systs(p, channel_names, channel_bins):
             ax.set_xticklabels(sys_names_bin, rotation=45, ha="right")
             plt.tight_layout()
             plt.savefig(
-                f"Plots/rel_systs_{signal_name}_{channel_name}_bin{bin_number}.png"
+                f"plots/rel_systs_{signal_name}_{channel_name}_bin{bin_number}.png"
             )
             plt.close()
 
@@ -206,33 +208,33 @@ def plot_rel_systs(p, channel_names, channel_bins):
 )
 def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
 
-    patches = [json.load(open(x)) for x in glob.glob("patch*.json")]
+    patchset = pyhf.PatchSet(json.load(open("patchsets_SlepSlep.json")))
 
     data = {
-        x[0]["value"]["name"]: {
-            p["path"]: process_patch(p) for p in x if p["op"] == "add"
+        x.patch[0]["value"]["name"]: {
+            p["path"]: process_patch(p) for p in x.patch if p["op"] == "add"
         }
-        for x in patches
-        if "value" in x[0]
+        for x in patchset
+        if "value" in x.patch[0]
     }
 
     # Make the mapping of json channel names to analysis region names
-    listOfPatches = glob.glob("patch*.json")
-    spec_sig = json.load(open(listOfPatches[0]))
-    spec_bkg = json.load(open("BkgOnly.json"))
+    spec_sig = patchset.patches[0].patch
+    spec_bkg = json.load(open("bkgonly.json"))
 
+    channel_names = {}
     names_json = []
-    for ichan, channel in enumerate(spec_bkg["channels"]):
+    for channel in spec_bkg["channels"]:
         names_json.append(channel["name"])
 
-    channels_json = []
-    for ichan, channel in enumerate(spec_sig):
-        channels_json.append(channel["path"])
-
-    channel_names = dict(zip(channels_json, names_json))
+    for patch in patchset:
+        for op in patch.patch:
+            path = op["path"]
+            channel_index = int(path.split('/')[2])
+            channel_names[path] = names_json[channel_index]
 
     # Make the mapping of number of json channel name to number of bins
-    workspace_bkg = pyhf.Workspace(json.load(open("BkgOnly.json")))
+    workspace_bkg = pyhf.Workspace(spec_bkg)
     channel_bins = {}
     for key, value in channel_names.items():
         channel_bins[key] = workspace_bkg.channel_nbins[value]
@@ -245,9 +247,9 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                     outliers.append((k, kk, b, r, n))
 
     # Make plots of relative syst for each signal point and bin
-    for x in patches:
-        if "value" in x[0]:
-            for p in x:
+    for x in patchset.patches:
+        if "value" in x.patch[0]:
+            for p in x.patch:
                 if p["op"] == "add":
                     plot_rel_systs(p, channel_names, channel_bins)
 
@@ -265,16 +267,16 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
     """
 
     data = {
-        x[0]["value"]["name"]: {
-            p["path"]: process_patch(p)[0] for p in x if p["op"] == "add"
+        x.patch[0]["value"]["name"]: {
+            p["path"]: process_patch(p)[0] for p in x.patch if p["op"] == "add"
         }
-        for x in patches
-        if "value" in x[0]
+        for x in patchset.patches
+        if "value" in x.patch[0]
     }
 
     sig_name_template = signal_template
 
-    for ichan, channel in enumerate(channels_json):
+    for channel in channel_names.keys():
         rel_systs = np.asarray(
             [
                 [
@@ -356,9 +358,10 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
                     ax.text(o[0] + 5, o[1] + 5, f"{o[2]:.2f}", c="r")
 
                 plt.tight_layout()
-                plt.savefig(f"Plots/{channel_names[channel]}_bin{bin_number}.png")
+                plt.savefig(f"plots/{channel_names[channel]}_bin{bin_number}.png")
                 plt.close()
 
 
 if __name__ == "__main__":
     outlier_plot()
+
