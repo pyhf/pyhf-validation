@@ -22,7 +22,6 @@
   """
 
 import json
-import glob
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.interpolate
@@ -223,7 +222,6 @@ def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
     }
 
     # Make the mapping of json channel names to analysis region names
-    spec_sig = patchset.patches[0].patch
     spec_bkg = json.load(open("bkgonly.json"))
 
     channel_names = {}
