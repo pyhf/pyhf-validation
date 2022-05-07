@@ -73,7 +73,7 @@ def process_patch(p):
         [m["data"]["lo"] for m in p["value"]["modifiers"] if m["type"] == "normsys"]
     )
     delta_up = np.asarray([delta * nom - nom for delta in hi])
-    delta_dn = np.asarray([delta * nom - nom for delta in lo])
+    delta_dn = np.asarray([nom - delta * nom for delta in lo])
     norm_deltas = handle_deltas(delta_up, delta_dn)
 
     stat_deltas = np.zeros_like(
@@ -132,7 +132,7 @@ def plot_rel_systs(p, channel_names, channel_bins):
         [m["data"]["lo"] for m in p["value"]["modifiers"] if m["type"] == "normsys"]
     )
     delta_up = np.asarray([delta * nom - nom for delta in hi])
-    delta_dn = np.asarray([delta * nom - nom for delta in lo])
+    delta_dn = np.asarray([nom - delta * nom for delta in lo])
     norm_deltas = handle_deltas(delta_up, delta_dn)
     norm_rel_size = np.absolute(norm_deltas) / (1.0 * nom)
 
