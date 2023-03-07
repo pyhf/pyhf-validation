@@ -19,7 +19,6 @@ import click
     default="",
 )
 def compare_fitted_nuisance(root_workspace, pyhf_json, outfile):
-
     # Get the root fit results
     infile = ROOT.TFile.Open(root_workspace)
     workspace = infile.Get("combined")
