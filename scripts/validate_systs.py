@@ -88,7 +88,6 @@ def process_patch(p):
 
 
 def plot_rel_systs(p, channel_names, channel_bins):
-
     signal_name = p["value"]["name"]
     channel_name = channel_names[p["path"]]
     nom = np.asarray(p["value"]["data"])
@@ -205,7 +204,6 @@ def plot_rel_systs(p, channel_names, channel_bins):
     required=False,
 )
 def outlier_plot(signal_template, v_max, x_var, y_var, x_label, y_label):
-
     patches = [json.load(open(x)) for x in glob.glob("patch*.json")]
 
     data = {
