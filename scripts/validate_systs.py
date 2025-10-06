@@ -1,24 +1,25 @@
 """
-  Date:     200325
-  History:
-    - Originally written as a python notebook by Lukas Heinrich
-    - Adapted for the 3L-RJ likelihood validation by Giordon Stark (https://github.com/kratsg/3L-RJ-mimic-likelihood-validation/blob/master/OutlierPlot.ipynb)
-    - Adapted and generalized to script by Danika MacDonell [March 25, 2020]
+Date:     200325
+History:
+  - Originally written as a python notebook by Lukas Heinrich
+  - Adapted for the 3L-RJ likelihood validation by Giordon Stark (https://github.com/kratsg/3L-RJ-mimic-likelihood-validation/blob/master/OutlierPlot.ipynb)
+  - Adapted and generalized to script by Danika MacDonell [March 25, 2020]
 
-  Details:  Script to visualize the relative size of the systematics for pyhf likelihoods at each mass point, where the systematics are added together in quadrature. Should be run in a directory containing the background-only json likelihood file, along with a patch json likelihood file for each signal point. Assumes that all the json patch file are located at the same directory level as this script.
+Details:  Script to visualize the relative size of the systematics for pyhf likelihoods at each mass point, where the systematics are added together in quadrature. Should be run in a directory containing the background-only json likelihood file, along with a patch json likelihood file for each signal point. Assumes that all the json patch file are located at the same directory level as this script.
 
-  Usage:
-  >> python OutlierPlot.py --signal_template <signal_template_{a}_{b}_{c}_for_masses> --x_var <which variable in signal name template to plot on x axis (defaults to 'a')> --y_var <which variable in signal name template to plot on x axis (defaults to 'b')> --v_max <max colourbar amplitude> --x_label <x axis label> --y_label <y axis label>
+Usage:
+>> python OutlierPlot.py --signal_template <signal_template_{a}_{b}_{c}_for_masses> --x_var <which variable in signal name template to plot on x axis (defaults to 'a')> --y_var <which variable in signal name template to plot on x axis (defaults to 'b')> --v_max <max colourbar amplitude> --x_label <x axis label> --y_label <y axis label>
 
-  Example for 1Lbb Wh analysis (https://glance.cern.ch/atlas/analysis/analyses/details.php?id=2969):
+Example for 1Lbb Wh analysis (https://glance.cern.ch/atlas/analysis/analyses/details.php?id=2969):
 
-  >> python OutlierPlot.py --signal_template C1N2_Wh_hbb_{a}_{b} --x_var a --y_var b --v_max 10 --x_label '$m(\tilde{\\chi}_{1}^{\\pm}/\tilde{\\chi}_{2}^{0})$ [GeV]' --y_label '$m(\tilde{\\chi}_{1}^{0})$ [GeV]'
+>> python OutlierPlot.py --signal_template C1N2_Wh_hbb_{a}_{b} --x_var a --y_var b --v_max 10 --x_label '$m(\tilde{\\chi}_{1}^{\\pm}/\tilde{\\chi}_{2}^{0})$ [GeV]' --y_label '$m(\tilde{\\chi}_{1}^{0})$ [GeV]'
 
-  The signal template is the name of an arbitrary signal in the json patch files, with the signal masses left as {}. Given a background-only file and a patch file, the signal name can be found under "samples" in the output of:
-  >> jsonpatch BkgOnly.json patch_XXX.json | pyhf inspect
+The signal template is the name of an arbitrary signal in the json patch files, with the signal masses left as {}. Given a background-only file and a patch file, the signal name can be found under "samples" in the output of:
+>> jsonpatch BkgOnly.json patch_XXX.json | pyhf inspect
 
-  If, for example, one of the signals is called C1N2_Wh_hbb_550_200, where 550 and 200 are the variable model masses, the signal template would be C1N2_Wh_hbb_{}_{}.
-  """
+If, for example, one of the signals is called C1N2_Wh_hbb_550_200, where 550 and 200 are the variable model masses, the signal template would be C1N2_Wh_hbb_{}_{}.
+
+"""
 
 import json
 import glob
